@@ -2,7 +2,7 @@ import pygame
 from typing import Union,List,Tuple
 import tools
 
-class Window:
+class Window: 
     def __init__(self,
                  size:Union[List[int],Tuple[int,int,int]],
                  color:Union[str,Tuple[int,int,int]],
