@@ -77,19 +77,41 @@ class Input:
                                                            color=self.color_title,
                                                            size=self.size_title,
                                                            color2=self.color)
+                        self.size_text_blit = self.text_blit.get_size()
+                        if self.size_text_blit[0] >= self.size[0]:
+                            if events.key != pygame.K_BACKSPACE or events.key != pygame.K_RETURN:
+                                self.k_backspace()
                         self.window.blit(self.text_blit, (self.coordinates[0],self.coordinates_text[1]))
                         pygame.display.flip()
-                        print(self.texts)
                     if events.key == pygame.K_RETURN:
-                        print("retornou")
-                        return self.texts
+                        self.clean()
+                        return self.texts_off
                     if events.key == pygame.K_BACKSPACE:
-                        self.texts = self.texts[:-1]
-                        self.text_blit = tools.insert_text(text=self.texts,
-                                                           color=self.color_title,
-                                                           size=self.size_title,
-                                                           color2=self.color)
-                        self.window.fill(self.color, self.rect)
-                        self.window.blit(self.text_blit, (self.coordinates[0],self.coordinates_text[1]))
-                        pygame.display.flip()
-                        print(self.texts)
+                        self.k_backspace()
+    def clean(self):
+        self.title = tools.insert_text(text=self.text_title,
+                                       color=self.color_title,
+                                       size=self.size_title,
+                                       color2=self.color)
+        self.rect = tools.draw_rect(window=self.window,
+                                    size=self.size,
+                                    color=self.color,
+                                    coordinates=self.coordinates,
+                                    background=self.background,
+                                    tags=self.tags)
+        self.grid_text = self.title.get_size()
+        self.coordinates_text = [int(self.coordinates[0] + self.size[0]/2 - self.grid_text[0]/2),
+                                 int(self.coordinates[1]+ self.size[1]/2 - self.grid_text[1]/2)]
+        self.window.blit(self.title,self.coordinates_text)
+        self.texts_off = self.texts
+        self.texts = ''
+        pygame.display.flip()
+    def k_backspace(self):
+        self.texts = self.texts[:-1]
+        self.text_blit = tools.insert_text(text=self.texts,
+                                            color=self.color_title,
+                                            size=self.size_title,
+                                            color2=self.color)
+        self.window.fill(self.color, self.rect)
+        self.window.blit(self.text_blit, (self.coordinates[0],self.coordinates_text[1]))
+        pygame.display.flip()
