@@ -1,0 +1,82 @@
+from window import Window
+import button
+from button import Button
+import pygame
+import tools
+def inserir():
+    print("but_inserir")
+def editar():
+    print("but_editar")
+def excluir():
+    print("but_excluir")
+def consultar():
+    print("but_consultar")
+def todos():
+    print("but_todos")
+def main_menu():
+    menu = Window(size=(1080,620),
+                  color="yellow",
+                  background="images/red_japan.jpg")
+    menu = menu.pack()
+    but_inserir = Button(window=menu,
+                         title="inserir",
+                         size=[400,50],
+                         color="white",
+                         coordinates=[0,0],
+                         command=inserir,
+                         color_title="black")
+    but_editar = Button(window=menu,
+                         title="editar",
+                         size=[400,50],
+                         color="white",
+                         coordinates=[0,0],
+                         command=editar,
+                         color_title="black")
+    but_excluir= Button(window=menu,
+                         title="excluir",
+                         size=[400,50],
+                         color="white",
+                         coordinates=[0,0],
+                         command=excluir,
+                         color_title="black")
+    but_consultar = Button(window=menu,
+                         title="consultar",
+                         size=[400,50],
+                         color="white",
+                         coordinates=[0,0],
+                         command=consultar,
+                         color_title="black")
+    but_todos = Button(window=menu,
+                         title="todos",
+                         size=[400,50],
+                         color="white",
+                         coordinates=[0,0],
+                         command=todos,
+                         color_title="black")
+    
+    botoes= [but_inserir,but_editar,but_excluir,but_consultar,but_todos]
+    center = button.get_center_button([1080,620],but_inserir,"x")
+    titulo = tools.insert_text(text="ATENDIMENTO",
+                               color="white",
+                               size=but_inserir.SIZE_TITLE,
+                               color2="black")
+    button.alight_buttons(start_coordinates=[center[0],100],orientation="y",space=10,buttons=botoes)
+    for but in botoes:
+        but.pack()
+    print(titulo.get_size())
+    center_title = tools.get_obj_center([1080,620],titulo.get_size())
+    menu.blit(titulo,(center_title[0],10))
+    return botoes
+    
+def loop(botes:list[button.Button]):
+    while loop:
+        for events in pygame.event.get():
+            if events.type == pygame.QUIT:
+                pygame.quit()
+            if events.type == pygame.MOUSEBUTTONDOWN:
+                pos = pygame.mouse.get_pos()
+                for run in botes:
+                    run.run(pos)
+        pygame.display.flip()
+botoesmenu = main_menu()
+loop(botoesmenu)
